@@ -1,4 +1,5 @@
 import { BackLink } from "./BackLink";
+import { sitePath } from "@/lib/homeHref";
 import { CategoryIcon } from "./CategoryIcon";
 import { SiteFooter } from "./SiteFooter";
 import type { CategoryDef, Project, ProjectVideo } from "@/lib/types";
@@ -258,7 +259,7 @@ export function ProjectArticle({ project, category }: ProjectArticleProps) {
           </div>
 
           <div className={`relative ${PAGE_SHELL} pb-12 pt-9 sm:pb-14 sm:pt-11 lg:pb-16 lg:pt-14`}>
-            <BackLink href={`/portfolio/${category.slug}`} label={`Retour — ${category.shortTitle}`} />
+            <BackLink href={sitePath(`/portfolio/${category.slug}`)} label={`Retour — ${category.shortTitle}`} />
 
             <div className="mt-8 w-full text-start">
               <div className="flex flex-wrap items-center gap-3 gap-y-2">

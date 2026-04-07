@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { CategoryDef } from "@/lib/types";
+import { sitePath } from "@/lib/homeHref";
 import { CategoryIcon } from "./CategoryIcon";
 import { CategoryPreviewTrio } from "./CategoryPreviewTrio";
 
@@ -35,7 +36,7 @@ export function PortfolioCategories({ categories, carouselImages }: PortfolioCat
                 transition={{ duration: 0.4, delay: i * 0.05 }}
               >
                 <a
-                  href={`/portfolio/${cat.slug}`}
+                  href={sitePath(`/portfolio/${cat.slug}`)}
                   className="group flex h-[19rem] min-h-[19rem] max-h-[19rem] w-full flex-col overflow-hidden rounded-card border border-line bg-surface shadow-card transition hover:-translate-y-1 hover:shadow-card-hover"
                 >
                   <div

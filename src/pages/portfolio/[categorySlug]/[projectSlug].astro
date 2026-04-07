@@ -3,6 +3,7 @@ import Layout from "../../../layouts/Layout.astro";
 import { ProjectArticle } from "../../../components/ProjectArticle";
 import { getCategoryBySlug } from "../../../lib/categories";
 import { getAllProjectRoutes, getProjectBySlugs } from "../../../lib/projects";
+import { sitePath } from "../../../lib/homeHref";
 
 export const prerender = true;
 
@@ -17,7 +18,7 @@ const project = getProjectBySlugs(categorySlug ?? "", projectSlug ?? "");
 const category = getCategoryBySlug(categorySlug ?? "");
 
 if (!project || !category) {
-  return Astro.redirect("/404");
+  return Astro.redirect(sitePath("/404.html"));
 }
 ---
 

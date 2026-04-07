@@ -6,6 +6,7 @@ import { PortfolioCategoryGrid } from "../../../components/PortfolioCategoryGrid
 import { SiteFooter } from "../../../components/SiteFooter";
 import { CATEGORIES, getCategoryBySlug } from "../../../lib/categories";
 import { getProjectsForCategory } from "../../../lib/projects";
+import { sitePath } from "../../../lib/homeHref";
 
 export const prerender = true;
 
@@ -16,7 +17,7 @@ export async function getStaticPaths() {
 const { categorySlug } = Astro.params;
 const category = getCategoryBySlug(categorySlug ?? "");
 if (!category) {
-  return Astro.redirect("/404");
+  return Astro.redirect(sitePath("/404.html"));
 }
 
 const projects = getProjectsForCategory(category.id);
@@ -29,7 +30,7 @@ const projects = getProjectsForCategory(category.id);
       <div class="site-header-cap__accent"></div>
     </div>
     <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10 lg:py-11">
-      <BackLink href="/#portfolio" label="Portfolio" />
+      <BackLink href={sitePath("/#portfolio")} label="Portfolio" />
       <div
         class="mt-5 flex flex-row items-start gap-3 border-l-4 border-solid pl-4 sm:mt-6 sm:gap-4"
         style={`border-left-color: ${category.panelBgHex}`}

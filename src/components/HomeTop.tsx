@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { ExperienceItem } from "@/content/site";
 import { experience, site } from "@/content/site";
 import { FadeIn } from "./FadeIn";
+import { sitePath } from "@/lib/homeHref";
 import { ProfilePhoto } from "./ProfilePhoto";
 
 function ExperienceArticle({
@@ -212,19 +213,19 @@ export function HomeTop() {
               aria-label="Navigation principale"
             >
               <a
-                href="/#portfolio"
+                href={sitePath("/#portfolio")}
                 className="flex min-h-[44px] w-full items-center justify-center rounded-card border-2 border-line bg-surface px-4 py-2.5 text-center text-xs font-bold uppercase tracking-wide text-primary shadow-card transition hover:border-primary/40 hover:shadow-card-hover sm:text-sm"
               >
                 Portfolio
               </a>
               <a
-                href="/#motivations"
+                href={sitePath("/#motivations")}
                 className="flex min-h-[44px] w-full items-center justify-center rounded-card border-2 border-line bg-surface px-4 py-2.5 text-center text-xs font-bold uppercase tracking-wide text-primary shadow-card transition hover:border-primary/40 hover:shadow-card-hover sm:text-sm"
               >
                 Motivations
               </a>
               <a
-                href="/contact"
+                href={sitePath("/contact")}
                 className="col-span-2 flex min-h-[44px] w-full items-center justify-center rounded-card border-2 border-primary bg-primary px-5 py-3 text-xs font-bold uppercase tracking-wide text-white shadow-card transition hover:bg-primary/95 sm:text-sm"
               >
                 Contact

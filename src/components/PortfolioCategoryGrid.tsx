@@ -2,6 +2,7 @@
 
 import { ProjectCard } from "./ProjectCard";
 import type { Project } from "@/lib/types";
+import { sitePath } from "@/lib/homeHref";
 
 type PortfolioCategoryGridProps = {
   projects: Project[];
@@ -21,7 +22,7 @@ export function PortfolioCategoryGrid({
         <ProjectCard
           key={p.slug}
           project={p}
-          href={`/portfolio/${categorySlug}/${p.slug}`}
+          href={sitePath(`/portfolio/${categorySlug}/${p.slug}`)}
           panelBgHex={panelBgHex}
           index={i}
         />
