@@ -1,0 +1,76 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { BackLink } from "../../../components/BackLink";
+import { CategoryIcon } from "../../../components/CategoryIcon";
+import { PortfolioCategoryGrid } from "../../../components/PortfolioCategoryGrid";
+import { SiteFooter } from "../../../components/SiteFooter";
+import { CATEGORIES, getCategoryBySlug } from "../../../lib/categories";
+import { getProjectsForCategory } from "../../../lib/projects";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  return CATEGORIES.map((c) => ({ params: { categorySlug: c.slug } }));
+}
+
+const { categorySlug } = Astro.params;
+const category = getCategoryBySlug(categorySlug ?? "");
+if (!category) {
+  return Astro.redirect("/404");
+}
+
+const projects = getProjectsForCategory(category.id);
+---
+
+<Layout title={`${category.title} — Portfolio`} description={category.description}>
+  <header class="border-b border-line bg-surface">
+    <div class="site-header-cap" aria-hidden="true">
+      <div class="site-header-cap__main"></div>
+      <div class="site-header-cap__accent"></div>
+    </div>
+    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10 lg:py-11">
+      <BackLink href="/#portfolio" label="Portfolio" />
+      <div
+        class="mt-5 flex flex-row items-start gap-3 border-l-4 border-solid pl-4 sm:mt-6 sm:gap-4"
+        style={`border-left-color: ${category.panelBgHex}`}
+      >
+        <div
+          class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-muted ring-1 ring-line sm:h-12 sm:w-12"
+          style={`color: ${category.panelBgHex}`}
+          aria-hidden="true"
+        >
+          <CategoryIcon categorySlug={category.slug} size={26} className="block" strokeWidth={2.25} />
+        </div>
+        <div class="min-w-0 flex-1">
+          <p class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-ink/50">Catégorie</p>
+          <h1 class="text-balance text-3xl font-extrabold uppercase tracking-tight text-primary sm:text-4xl">
+            {category.title}
+          </h1>
+          <p class="mt-1 max-w-2xl text-pretty text-sm font-medium leading-relaxed text-ink/70">
+            {category.description}
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="bg-muted pb-16 pt-8 sm:pt-10">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      {
+        projects.length === 0 ? (
+          <p class="rounded-card border border-dashed border-line bg-surface p-8 text-center text-sm font-medium text-ink/60">
+            Aucun projet dans ce dossier pour le moment. Ajoutez un sous-dossier avec des visuels ou un{" "}
+            <code class="rounded bg-muted px-1 py-0.5 text-xs">content.json</code>.
+          </p>
+        ) : (
+          <PortfolioCategoryGrid
+            client:load
+            projects={projects}
+            categorySlug={category.slug}
+            panelBgHex={category.panelBgHex}
+          />
+        )
+      }
+    </div>
+  </main>
+  <SiteFooter />
+</Layout>

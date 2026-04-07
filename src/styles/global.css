@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  /* Remplacez par une police locale dans public/fonts/ si besoin */
+  --font-gilroy: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* Triplets RGB (Tailwind / alpha) — mode jour */
+  --color-primary: 30 58 138;
+  --color-accent: 249 115 22;
+  --color-ink: 17 24 39;
+  --color-muted: 249 250 251;
+  --color-line: 229 231 235;
+  --color-surface: 255 255 255;
+  --color-footer: 17 24 39;
+}
+
+.dark {
+  color-scheme: dark;
+  --color-primary: 147 197 253;
+  --color-accent: 251 146 60;
+  --color-ink: 241 245 249;
+  --color-muted: 15 23 42;
+  --color-line: 51 65 85;
+  --color-surface: 30 41 59;
+  --color-footer: 2 6 23;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-muted text-ink antialiased;
+  text-align: start;
+  overflow-x: clip;
+}
+
+/* Lisibilité responsive : pas de justification (rivières blanches), retours de ligne plus naturels */
+@layer base {
+  p,
+  li,
+  blockquote,
+  figcaption {
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    overflow-wrap: break-word;
+  }
+}
+
+::selection {
+  background-color: rgb(var(--color-accent) / 0.28);
+  color: rgb(var(--color-ink));
+}
+
+/* Bandeau haut des en-têtes : aplats (pas de dégradé), formes proches des cartes du site */
+@layer components {
+  .site-header-cap {
+    @apply flex h-2 w-full shrink-0 overflow-hidden rounded-b-card;
+  }
+
+  .site-header-cap__main {
+    @apply min-h-0 flex-1 bg-primary;
+  }
+
+  .site-header-cap__accent {
+    @apply w-24 shrink-0 bg-accent sm:w-28;
+  }
+}
+

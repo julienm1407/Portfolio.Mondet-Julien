@@ -1,0 +1,41 @@
+---
+import "../styles/global.css";
+import { ThemeToggle } from "../components/ThemeToggle";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Mondet Julien — Communication digitale et management de projet",
+  description =
+    "Portfolio professionnel — communication digitale et management de projet.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <script is:inline>
+      (function () {
+        const k = "portfolio-theme";
+        try {
+          const stored = localStorage.getItem(k);
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          if (stored === "dark" || (stored !== "light" && prefersDark)) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch {}
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen font-sans hyphens-auto">
+    <ThemeToggle client:load />
+    <slot />
+  </body>
+</html>

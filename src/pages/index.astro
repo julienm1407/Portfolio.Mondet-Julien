@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { HomeTop } from "../components/HomeTop";
+import { MotivationsSection } from "../components/MotivationsSection";
+import { PortfolioCategories } from "../components/PortfolioCategories";
+import { SkillsSection } from "../components/SkillsSection";
+import { SiteFooter } from "../components/SiteFooter";
+import { CATEGORIES } from "../lib/categories";
+import { getCategoryCarouselImages } from "../lib/projects";
+
+export const prerender = true;
+
+const carouselImages = Object.fromEntries(
+  CATEGORIES.map((c) => [c.id, getCategoryCarouselImages(c.id, 8)]),
+) as Record<string, string[]>;
+---
+
+<Layout>
+  <HomeTop client:load />
+  <main>
+    <PortfolioCategories client:load categories={CATEGORIES} carouselImages={carouselImages} />
+    <MotivationsSection client:load />
+    <SkillsSection client:load />
+  </main>
+  <SiteFooter />
+</Layout>

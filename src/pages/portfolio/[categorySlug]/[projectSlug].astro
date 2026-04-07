@@ -1,0 +1,26 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { ProjectArticle } from "../../../components/ProjectArticle";
+import { getCategoryBySlug } from "../../../lib/categories";
+import { getAllProjectRoutes, getProjectBySlugs } from "../../../lib/projects";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  return getAllProjectRoutes().map(({ categorySlug, projectSlug }) => ({
+    params: { categorySlug, projectSlug },
+  }));
+}
+
+const { categorySlug, projectSlug } = Astro.params;
+const project = getProjectBySlugs(categorySlug ?? "", projectSlug ?? "");
+const category = getCategoryBySlug(categorySlug ?? "");
+
+if (!project || !category) {
+  return Astro.redirect("/404");
+}
+---
+
+<Layout title={`${project.title} — ${category.shortTitle}`} description={project.content.summary ?? project.title}>
+  <ProjectArticle project={project} category={category} />
+</Layout>
