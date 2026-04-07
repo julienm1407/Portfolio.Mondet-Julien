@@ -38,11 +38,14 @@ export function getCategoryBasePath(categoryId: string): string | null {
   return null;
 }
 
-/** URL servie par /api/project-asset (fonctionne même sans fichiers sous public/). */
+/** Fichiers servis en statique via public/projects/* (symlinks → dossiers 01_* à la racine). */
 function projectMediaUrl(categoryId: string, projectSlug: string, relative: string): string {
   const fileParts = relative.split(/[/\\]/).filter((p) => p && p !== "." && p !== "..");
   const segs = [categoryId, projectSlug, ...fileParts];
-  return "/api/project-asset/" + segs.map((s) => encodeURIComponent(s)).join("/");
+  const pathSegs = segs.map((s) => encodeURIComponent(s)).join("/");
+  const base = typeof import.meta.env.BASE_URL === "string" ? import.meta.env.BASE_URL : "/";
+  const norm = base.endsWith("/") ? base : `${base}/`;
+  return `${norm}projects/${pathSegs}`;
 }
 
 const IMAGE_RE = /\.(jpe?g|png|webp|gif)$/i;

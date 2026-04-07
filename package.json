@@ -7,12 +7,12 @@
     "dev": "astro dev --host 127.0.0.1",
     "dev:3000": "astro dev --host 127.0.0.1 --port 3000",
     "build": "astro build",
+    "build:github": "PUBLIC_GITHUB_PAGES=1 astro build",
     "preview": "astro preview --host 127.0.0.1",
-    "clean": "rm -rf dist .astro",
+    "clean": "rm -rf dist docs .astro",
     "lint": "eslint src"
   },
   "dependencies": {
-    "@astrojs/node": "^9.2.0",
     "@astrojs/react": "^4.2.0",
     "astro": "^5.5.0",
     "framer-motion": "^12.4.7",

@@ -1,0 +1,10 @@
+{
+  "title": "Dashboard data — Café de l’Homme",
+  "shortTitle": "Dashboard data",
+  "type": "Data visualisation & pilotage",
+  "client": "Café de l’Homme (Paris)",
+  "summary": "Conception d’un tableau de bord stratégique pour analyser la performance d’un restaurant haut de gamme.",
+  "context": "Dans le cadre d’un projet de data analyse, j’ai été amené à concevoir un dashboard de pilotage pour le restaurant Café de l’Homme à Paris, situé au Trocadéro.\n\nEn tant que consultant data, l’objectif était d’exploiter des données issues de SevenRooms (réservations / CRM) et Lightspeed (ventes / ERP), afin de fournir une vision claire et exploitable de l’activité du restaurant.",
+  "description": "Le travail consistait à structurer et analyser les données pour construire un tableau de bord permettant de suivre les indicateurs clés de performance. L’objectif était de faciliter la prise de décision en centralisant les informations liées à l’activité commerciale, à l’expérience client et à la performance opérationnelle.\n\nLe dashboard permettait notamment de suivre les réservations, le volume de clients, les ventes ainsi que les tendances d’activité sur différentes périodes. Une attention particulière a été portée à la lisibilité des données, avec une hiérarchisation claire des indicateurs et une visualisation adaptée pour une lecture rapide.\n\nL’enjeu était de transformer des données brutes en informations directement exploitables, afin d’identifier des leviers d’optimisation, que ce soit sur la gestion des réservations, l’occupation du restaurant ou la performance globale.\n\nCe projet m’a permis de développer une approche orientée data, en combinant analyse, structuration et visualisation pour répondre à des problématiques concrètes de pilotage.",
+  "results": "Ce dashboard a permis de proposer une lecture synthétique de l’activité du restaurant, facilitant l’analyse des performances et l’identification d’axes d’amélioration.\n\nIl m’a permis de renforcer mes compétences en data visualisation et en interprétation des données, avec une approche centrée sur l’aide à la décision."
+}
