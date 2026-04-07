@@ -38,10 +38,18 @@ export function getCategoryBasePath(categoryId: string): string | null {
   return null;
 }
 
+/**
+ * Segments d’URL alignés sur les noms stockés dans Git / servis par GitHub Pages (UTF-8, souvent NFC).
+ * Sans ça, macOS peut donner des noms en NFD via readdir → encodage URL différent → 404 en production.
+ */
+function segmentForProjectUrl(segment: string): string {
+  return segment.normalize("NFC");
+}
+
 /** Fichiers servis en statique via public/projects/* (symlinks → dossiers 01_* à la racine). */
 function projectMediaUrl(categoryId: string, projectSlug: string, relative: string): string {
   const fileParts = relative.split(/[/\\]/).filter((p) => p && p !== "." && p !== "..");
-  const segs = [categoryId, projectSlug, ...fileParts];
+  const segs = [categoryId, projectSlug, ...fileParts].map(segmentForProjectUrl);
   const pathSegs = segs.map((s) => encodeURIComponent(s)).join("/");
   const base = typeof import.meta.env.BASE_URL === "string" ? import.meta.env.BASE_URL : "/";
   const norm = base.endsWith("/") ? base : `${base}/`;
