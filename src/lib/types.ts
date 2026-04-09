@@ -54,6 +54,8 @@ export type CategoryDef = {
   slug: string;
   title: string;
   shortTitle: string;
+  /** Ligne au-dessus du titre sur la carte d’accueil (optionnel, ex. « Social media »). */
+  cardEyebrow?: string;
   description: string;
   /** Fond uni de l’encart (charte bleu / orange) */
   panelBgHex: string;

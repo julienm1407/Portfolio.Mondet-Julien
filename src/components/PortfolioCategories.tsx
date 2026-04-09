@@ -51,6 +51,11 @@ export function PortfolioCategories({ categories, carouselImages }: PortfolioCat
                         <CategoryIcon categorySlug={cat.slug} size={18} className="text-white" strokeWidth={2.25} />
                       </div>
                       <div className="min-w-0 flex-1">
+                        {cat.cardEyebrow ? (
+                          <p className="mb-0.5 text-[9px] font-extrabold uppercase tracking-[0.16em] text-white/80 sm:text-[10px]">
+                            {cat.cardEyebrow}
+                          </p>
+                        ) : null}
                         <h3 className="line-clamp-2 text-balance text-lg font-extrabold uppercase leading-tight tracking-tight text-white sm:text-xl">
                           {cat.shortTitle}
                         </h3>

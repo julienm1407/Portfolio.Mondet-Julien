@@ -23,5 +23,5 @@ if (!project || !category) {
 ---
 
 <Layout title={`${project.title} — ${category.shortTitle}`} description={project.content.summary ?? project.title}>
-  <ProjectArticle project={project} category={category} />
+  <ProjectArticle client:load project={project} category={category} />
 </Layout>

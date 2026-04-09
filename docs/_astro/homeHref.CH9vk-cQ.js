@@ -1,0 +1,1 @@
+function n(){const t="/Portfolio.Mondet-Julien/";return t.length>0?t.endsWith("/")?t:`${t}/`:"/"}function s(t){const e=n(),r=t.startsWith("/")?t.slice(1):t;return`${e}${r}`}function i(t){return typeof t=="string"&&t.trim()!==""?t.trim():n()}export{i as g,s};

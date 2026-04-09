@@ -27,7 +27,7 @@ export function ProfilePhoto() {
       <img
         src={src}
         alt={`Portrait — ${site.name}`}
-        className="absolute inset-0 h-full w-full origin-[50%_18%] scale-[1.2] -translate-y-[10%] object-cover object-top"
+        className="absolute inset-0 h-full w-full origin-[50%_18%] -scale-x-[1.2] scale-y-[1.2] -translate-y-[10%] object-cover object-top"
         width={480}
         height={640}
         fetchPriority="high"

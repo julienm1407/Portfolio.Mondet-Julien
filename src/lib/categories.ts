@@ -4,8 +4,8 @@ export const CATEGORIES: CategoryDef[] = [
   {
     id: "01_social_media",
     slug: "social-media",
-    title: "Social Media",
-    shortTitle: "Social Media",
+    title: "Contenus digitaux",
+    shortTitle: "Contenus digitaux",
     description: "Campagnes, contenus éditoriaux et formats social ads.",
     panelBgHex: "#1E3A8A",
   },

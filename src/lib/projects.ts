@@ -80,22 +80,26 @@ function walkImageFiles(dir: string, baseDir: string, acc: string[] = []): strin
 }
 
 function collectImageRelatives(projectPath: string): string[] {
-  const visuelsDir = path.join(projectPath, "visuels");
-  if (fs.existsSync(visuelsDir) && fs.statSync(visuelsDir).isDirectory()) {
-    const fromVisuels = walkImageFiles(visuelsDir, projectPath);
-    if (fromVisuels.length > 0) return fromVisuels.sort();
-  }
   const all = walkImageFiles(projectPath, projectPath);
-  return all
-    .filter((r) => {
-      const lower = r.toLowerCase();
-      if (lower.includes("/exports/")) return false;
-      if (lower.includes("/videos/")) return false;
-      if (lower === "cover.jpg" || lower === "cover.jpeg" || lower === "cover.png")
-        return false;
-      return true;
-    })
-    .sort();
+  const filtered = all.filter((r) => {
+    const norm = r.replace(/\\/g, "/");
+    const lower = norm.toLowerCase();
+    if (lower.includes("/exports/")) return false;
+    if (lower.includes("/videos/")) return false;
+    if (lower === "cover.jpg" || lower === "cover.jpeg" || lower === "cover.png") return false;
+    return true;
+  });
+
+  const inVisuels: string[] = [];
+  const other: string[] = [];
+  for (const r of filtered) {
+    const norm = r.replace(/\\/g, "/");
+    if (norm.startsWith("visuels/")) inVisuels.push(r);
+    else other.push(r);
+  }
+  inVisuels.sort();
+  other.sort();
+  return [...inVisuels, ...other];
 }
 
 function readContent(projectPath: string): ProjectContent {

@@ -1,4 +1,8 @@
+"use client";
+
+import { useState } from "react";
 import { BackLink } from "./BackLink";
+import { ImageLightbox } from "./ImageLightbox";
 import { sitePath } from "@/lib/homeHref";
 import { CategoryIcon } from "./CategoryIcon";
 import { SiteFooter } from "./SiteFooter";
@@ -75,25 +79,32 @@ function IntroPortraitMedia({
   imageSrc,
   video,
   title,
+  onOpenImage,
 }: {
   imageSrc?: string;
   video?: ProjectVideo | null;
   title: string;
+  onOpenImage?: (src: string) => void;
 }) {
   if (imageSrc) {
     return (
       <figure className="mx-auto w-full max-w-[min(100%,400px)] lg:mx-0">
-        <div className="flex min-h-[min(52vh,520px)] items-center justify-center rounded-2xl border border-line/60 bg-muted/40 p-3 shadow-sm ring-1 ring-black/[0.04] sm:p-4">
+        <button
+          type="button"
+          className="group flex w-full min-h-[min(52vh,520px)] cursor-zoom-in items-center justify-center rounded-2xl border border-line/60 bg-muted/40 p-3 text-left shadow-sm ring-1 ring-black/[0.04] transition hover:border-primary/35 hover:ring-primary/12 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:p-4"
+          onClick={() => onOpenImage?.(imageSrc)}
+          aria-label={`Agrandir l’aperçu — ${title}`}
+        >
           <img
             src={imageSrc}
             alt={`Aperçu — ${title}`}
-            className="h-auto max-h-[min(68vh,600px)] w-full max-w-full object-contain"
+            className="h-auto max-h-[min(68vh,600px)] w-full max-w-full object-contain transition group-hover:opacity-[0.97]"
             width={800}
             height={1200}
             loading="eager"
             decoding="async"
           />
-        </div>
+        </button>
       </figure>
     );
   }
@@ -120,29 +131,38 @@ function SouvenirImagePair({
   srcA,
   srcB,
   title,
+  onOpenImage,
 }: {
   srcA?: string;
   srcB?: string;
   title: string;
+  onOpenImage?: (src: string) => void;
 }) {
   const frame =
     "overflow-hidden rounded-lg border border-line/70 bg-surface p-1.5 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.18)] ring-1 ring-black/[0.06]";
+  const clickable =
+    "cursor-zoom-in transition hover:border-primary/40 hover:ring-primary/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
   if (srcA && !srcB) {
     return (
       <div className="mx-auto w-full max-w-[300px] lg:mx-0">
-        <div className={`${frame} -rotate-2`}>
+        <button
+          type="button"
+          className={`${frame} -rotate-2 block w-full ${clickable}`}
+          onClick={() => onOpenImage?.(srcA)}
+          aria-label={`Agrandir le visuel — ${title}`}
+        >
           <img
             src={srcA}
             alt={`Visuel — ${title}`}
-            className="block h-auto w-full object-contain"
+            className="pointer-events-none block h-auto w-full object-contain"
             style={{ maxHeight: "min(42vh, 360px)" }}
             width={600}
             height={800}
             loading="lazy"
             decoding="async"
           />
-        </div>
+        </button>
       </div>
     );
   }
@@ -150,18 +170,23 @@ function SouvenirImagePair({
   if (!srcA && srcB) {
     return (
       <div className="mx-auto w-full max-w-[300px] lg:mx-0">
-        <div className={`${frame} rotate-2`}>
+        <button
+          type="button"
+          className={`${frame} rotate-2 block w-full ${clickable}`}
+          onClick={() => onOpenImage?.(srcB)}
+          aria-label={`Agrandir le visuel — ${title}`}
+        >
           <img
             src={srcB}
             alt=""
-            className="block h-auto w-full object-contain"
+            className="pointer-events-none block h-auto w-full object-contain"
             style={{ maxHeight: "min(42vh, 360px)" }}
             width={600}
             height={800}
             loading="lazy"
             decoding="async"
           />
-        </div>
+        </button>
       </div>
     );
   }
@@ -170,36 +195,42 @@ function SouvenirImagePair({
 
   return (
     <div className="relative mx-auto h-[min(48vh,400px)] w-full max-w-[min(100%,400px)] sm:h-[min(50vh,440px)] lg:mx-0 lg:max-w-[420px]">
-      <div
-        className={`absolute left-0 top-1 w-[76%] ${frame} -rotate-[5deg] sm:-rotate-[4deg]`}
+      <button
+        type="button"
+        className={`absolute left-0 top-1 w-[76%] ${frame} -rotate-[5deg] sm:-rotate-[4deg] ${clickable}`}
         style={{ transformOrigin: "center center" }}
+        onClick={() => onOpenImage?.(srcA!)}
+        aria-label={`Agrandir le visuel — ${title}`}
       >
         <img
           src={srcA}
           alt={`Visuel — ${title}`}
-          className="block h-auto w-full object-contain"
+          className="pointer-events-none block h-auto w-full object-contain"
           style={{ maxHeight: "min(38vh, 300px)" }}
           width={560}
           height={720}
           loading="lazy"
           decoding="async"
         />
-      </div>
-      <div
-        className={`absolute bottom-2 right-0 w-[70%] ${frame} translate-x-1 rotate-[6deg] sm:translate-x-2 sm:rotate-[5deg]`}
+      </button>
+      <button
+        type="button"
+        className={`absolute bottom-2 right-0 w-[70%] ${frame} translate-x-1 rotate-[6deg] sm:translate-x-2 sm:rotate-[5deg] ${clickable}`}
         style={{ transformOrigin: "center center" }}
+        onClick={() => onOpenImage?.(srcB!)}
+        aria-label="Agrandir le second visuel"
       >
         <img
           src={srcB!}
           alt=""
-          className="block h-auto w-full object-contain"
+          className="pointer-events-none block h-auto w-full object-contain"
           style={{ maxHeight: "min(36vh, 280px)" }}
           width={520}
           height={680}
           loading="lazy"
           decoding="async"
         />
-      </div>
+      </button>
     </div>
   );
 }
@@ -207,6 +238,12 @@ function SouvenirImagePair({
 export function ProjectArticle({ project, category }: ProjectArticleProps) {
   const { content } = project;
   const allImages = allProjectImageUrls(project);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const openLightbox = (src: string) => {
+    const i = allImages.indexOf(src);
+    if (i >= 0) setLightboxIndex(i);
+  };
 
   /** La 1re vidéo remplace la 1re image dans l’intro (gauche) ; les images sont décalées pour partie 3 + galerie. */
   const firstVideo = project.videos[0] ?? null;
@@ -232,6 +269,15 @@ export function ProjectArticle({ project, category }: ProjectArticleProps) {
 
   return (
     <>
+      {lightboxIndex !== null && allImages.length > 0 ? (
+        <ImageLightbox
+          urls={allImages}
+          index={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+          onNavigate={setLightboxIndex}
+          label={`Visuels — ${project.title}`}
+        />
+      ) : null}
       <article className="bg-surface">
         {/* En-tête : identité forte, sans image */}
         <header className="relative overflow-hidden border-b border-line/70 bg-gradient-to-br from-muted/90 via-surface to-primary/[0.07]">
@@ -296,7 +342,12 @@ export function ProjectArticle({ project, category }: ProjectArticleProps) {
             {hasIntroMedia ? (
               <>
                 <div className="order-1 lg:order-1 lg:col-span-5 xl:col-span-5">
-                  <IntroPortraitMedia imageSrc={introImage} video={introVideo} title={project.title} />
+                  <IntroPortraitMedia
+                    imageSrc={introImage}
+                    video={introVideo}
+                    title={project.title}
+                    onOpenImage={openLightbox}
+                  />
                 </div>
                 <div className="order-2 lg:order-2 lg:col-span-7 xl:col-span-7">
                   <h2 className={sectionHeadingClass}>{projectArticleSectionTitles.context}</h2>
@@ -322,7 +373,12 @@ export function ProjectArticle({ project, category }: ProjectArticleProps) {
             {hasPair ? (
               <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-12 xl:gap-14">
                 <div className="order-1 lg:col-span-5">
-                  <SouvenirImagePair srcA={pairA} srcB={pairB} title={project.title} />
+                  <SouvenirImagePair
+                    srcA={pairA}
+                    srcB={pairB}
+                    title={project.title}
+                    onOpenImage={openLightbox}
+                  />
                 </div>
                 <div className="order-2 flex flex-col items-start lg:col-span-7">
                   <h2 className={`${sectionHeadingClass} w-full max-w-[min(100%,40rem)]`}>
@@ -352,23 +408,23 @@ export function ProjectArticle({ project, category }: ProjectArticleProps) {
                 aria-label="Galerie de miniatures — faire défiler horizontalement"
               >
                 {galleryImages.map((src, i) => (
-                  <a
+                  <button
                     key={src}
-                    href={src}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="shrink-0 rounded-lg border border-line/80 bg-surface p-1 shadow-sm ring-1 ring-black/[0.03] transition hover:border-primary/30 hover:ring-primary/15"
+                    type="button"
+                    className="shrink-0 cursor-zoom-in rounded-lg border border-line/80 bg-surface p-1 shadow-sm ring-1 ring-black/[0.03] transition hover:border-primary/30 hover:ring-primary/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    onClick={() => openLightbox(src)}
+                    aria-label={`Agrandir la miniature ${i + 1} — ${project.title}`}
                   >
                     <img
                       src={src}
                       alt={i === 0 ? `Miniature — ${project.title}` : ""}
-                      className="block h-24 w-auto max-w-[180px] rounded-md object-contain sm:h-28 sm:max-w-[220px]"
+                      className="pointer-events-none block h-24 w-auto max-w-[180px] rounded-md object-contain sm:h-28 sm:max-w-[220px]"
                       width={220}
                       height={112}
                       loading="lazy"
                       decoding="async"
                     />
-                  </a>
+                  </button>
                 ))}
               </div>
             </div>

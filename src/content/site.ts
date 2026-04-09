@@ -3,7 +3,6 @@ import motivationsPhotoAsset from "../assets/motivations.jpg?url";
 import playImpactLogoUrl from "../assets/play-impact-logo.png?url";
 import talkFootLogoUrl from "../assets/talk-foot-logo.png?url";
 import winwinsportsLogoUrl from "../assets/winwinsports-logo.png?url";
-import lnaSanteLogoUrl from "../assets/lna-sante-logo.png?url";
 
 export const site = {
   name: "MONDET JULIEN",
@@ -17,7 +16,7 @@ export const site = {
   experienceHeadline: "PRÊT À M'INVESTIR SUR UN PROJET COM' !",
   /** Court résumé sous l’accroche (un paragraphe par entrée du tableau). */
   experienceSummary: [
-    "Après une expérience en communication institutionnelle et une alternance en communication digitale, j’ai consolidé mes compétences à travers des projets en freelance.",
+    "Après un passage en communication institutionnelle puis une alternance côté digital, j’ai consolidé mes compétences sur des missions en freelance.",
     "Aujourd’hui, je souhaite intégrer une structure pour contribuer à des projets ambitieux et évoluer dans un cadre professionnel.",
   ],
   contact: {
@@ -71,14 +70,6 @@ export const employerReviews: EmployerReview[] = [
       "J’ai eu l’occasion d’accompagner Julien lors de son alternance chez WinWinSports. Il s’est rapidement démarqué par son professionnalisme, sa capacité à être force de proposition et son envie constante de progresser. Curieux et engagé, il n’hésite pas à sortir de son périmètre pour apporter de la valeur et relever de nouveaux défis. Une très belle évolution tout au long de son parcours.",
     attribution: "Olivier Alquié — directeur général · alternance",
   },
-  {
-    company: "LNA Santé — Mar Vivo",
-    rating: 5,
-    logoUrl: lnaSanteLogoUrl,
-    quote:
-      "Rigoureux sur le terrain comme sur les supports print et vidéo. À l’écoute des équipes soignantes et force de proposition pour nos contenus institutionnels.",
-    attribution: "Stage — communication institutionnelle",
-  },
 ];
 
 export type ExperienceItem = {
@@ -99,10 +90,10 @@ export const experience: ExperienceItem[] = [
     role: "Freelance — chef de projet & motion designer",
     company: "Play Impact & Talk Foot",
     details: [
-      "Production motion design — réalisation de vidéos éducatives et de formation pour Play Impact.",
-      "Création de contenus viraux & visuels — vidéos et visuels engageants pour le développement de TalkFoot.",
-      "UX/UI & maquettage digital — maquettes abouties pour l’application et le site web.",
-      "Gestion de projet startup — pilotage et développement de projet.",
+      "Motion design : vidéos éducatives et de formation pour Play Impact.",
+      "Formats courts viraux et charte graphique pour faire grandir TalkFoot.",
+      "UX/UI : wireframes et maquettes pour l’app et le site.",
+      "Pilotage en startup : planning, livrables et coordination avec les équipes.",
     ],
   },
   {
@@ -110,11 +101,11 @@ export const experience: ExperienceItem[] = [
     role: "Alternance — chargé de communication",
     company: "WinWinSports",
     details: [
-      "Stratégie de contenu & planning éditorial — pilotage d’un calendrier multi-plateformes, vision stratégique et cohérence de marque.",
-      "Création de contenus & engagement — posts et vidéos social media, animation de communautés.",
-      "Brand content & identité visuelle — visuels et supports pour une image de marque cohérente.",
-      "Analyse & optimisation — suivi des KPIs et ajustement des actions.",
-      "Gestion d’écosystème digital — réseaux sociaux, emailings et site web.",
+      "Calendrier éditorial multi-plateformes, ligne éditoriale et cohérence de marque.",
+      "Posts et vidéos réseaux sociaux, animation de communautés.",
+      "Brand content : supports alignés sur l’identité visuelle et le discours de marque.",
+      "Suivi des KPI et ajustements des campagnes et contenus.",
+      "Animation quotidienne des canaux : réseaux sociaux, emailings et site vitrine.",
     ],
   },
   {
@@ -122,9 +113,9 @@ export const experience: ExperienceItem[] = [
     role: "Stage — chargé de communication",
     company: "LNA Santé — Mar Vivo (institut médicalisé)",
     details: [
-      "Production audiovisuelle — captation photo/vidéo et montage de contenus engageants.",
-      "Conception de supports de communication — print et digitaux (dépliants, dossiers, visuels).",
-      "Production événementielle — création de contenus, aide à l’organisation (logistique, coordination).",
+      "Captation photo et vidéo, montage de formats engageants pour les canaux internes et externes.",
+      "Print et digital : dépliants, dossiers et visuels institutionnels.",
+      "Événements : création de contenus, logistique et coordination sur le terrain.",
     ],
   },
 ];
@@ -171,11 +162,33 @@ export const motivationsContent: MotivationsContent = {
   },
 };
 
+/** Icône marque via paquet npm `simple-icons` (SVG jsDelivr) — slugs : https://simpleicons.org/ */
+export type SkillBrandIcon = {
+  kind: "simpleIcon";
+  slug: string;
+  /** Couleur marque (référence), non utilisée dans l’URL. */
+  hex: string;
+  label: string;
+};
+
+/** Icône Lucide quand la marque n’est pas dans Simple Icons. */
+export type SkillLucideIcon = {
+  kind: "lucide";
+  /** Lucide : Film (montage), Terminal (dev), Sparkles (IA). */
+  icon: "film" | "terminal" | "sparkles";
+  label: string;
+};
+
+export type SkillToolEntry = SkillBrandIcon | SkillLucideIcon;
+
 export type SkillCategory = {
   title: string;
   /** Ce qui distingue ce bloc par rapport aux autres (une ligne). */
   differentiator: string;
+  /** Liste à puces (ignorée si `toolRows` est défini). */
   items: string[];
+  /** Lignes d’outils avec logos (remplace `items` pour cette carte). */
+  toolRows?: SkillToolEntry[][];
 };
 
 /** En-tête de la section Compétences (page d’accueil). */
@@ -226,6 +239,33 @@ export const skillCategories: SkillCategory[] = [
       "Organisation et valorisation d’événements (sport amateur, santé, institutions).",
       "Coordination terrain, logistique et production de contenus lors des temps forts.",
       "Montage de dossiers et réponses à des appels d’offres (structure, argumentaire, conformité).",
+    ],
+  },
+  {
+    title: "Outils & logiciels",
+    differentiator: "Logiciels sur lesquels je suis à l’aise au quotidien.",
+    items: [],
+    toolRows: [
+      [
+        { kind: "simpleIcon", slug: "adobephotoshop", hex: "31A8FF", label: "Photoshop" },
+        { kind: "simpleIcon", slug: "adobeillustrator", hex: "FF9A00", label: "Illustrator" },
+        { kind: "simpleIcon", slug: "canva", hex: "00C4CC", label: "Canva" },
+      ],
+      [
+        { kind: "lucide", icon: "film", label: "CapCut" },
+        { kind: "simpleIcon", slug: "adobepremierepro", hex: "9999FF", label: "Premiere Pro" },
+      ],
+      [
+        { kind: "simpleIcon", slug: "wordpress", hex: "21759B", label: "WordPress" },
+        { kind: "lucide", icon: "terminal", label: "Cursor" },
+        { kind: "simpleIcon", slug: "figma", hex: "F24E1E", label: "Figma" },
+        { kind: "simpleIcon", slug: "wix", hex: "0C6EFC", label: "Wix" },
+      ],
+      [
+        { kind: "simpleIcon", slug: "notion", hex: "000000", label: "Notion" },
+        { kind: "lucide", icon: "sparkles", label: "IA" },
+      ],
+      [{ kind: "simpleIcon", slug: "google", hex: "4285F4", label: "Google Workspace" }],
     ],
   },
 ];
